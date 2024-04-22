@@ -1,1 +1,1 @@
-This GitHub repository is the hub for my DevOps projects—crafted for my portfolio and to support fellow enthusiasts. Explore practical solutions and automation strategies designed to enhance cloud environments. Join me on this DevOps journey of efficiency and collaboration.
+This GitHub repository is the hub for my DevOps projects—crafted for my portfolio and to support fellow enthusiasts. Explore practical solutions and automation strategies designed to enhance cloud environments. Join me on this DevOps journey of efficiency and Collaboration.
