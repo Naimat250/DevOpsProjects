@@ -1,0 +1,32 @@
+pipeline { agent any environment { DOCKER_IMAGE = 'naimat1233/flask-app:latest' CONTAINER_NAME = 'myapp_container'
+    }
+    stages { stage('Clone') { steps { git branch: 'main', url: 'https://github.com/Naimat250/DevOpsProjects.git' 
+                echo 'Clone Successfully'
+            }
+        }
+        stage('Build') { steps { dir('Multistage-Flask-App') { sh 'docker build -t $DOCKER_IMAGE .'
+                }
+                echo 'Build Successfully'
+            }
+        }
+        stage('Deploy') { steps { script {
+                    // Remove any existing container with the same name
+                    sh """ docker ps -a | grep $CONTAINER_NAME && docker rm -f $CONTAINER_NAME || true """
+                    // Run the container
+                    sh """ docker run -d --name $CONTAINER_NAME -p 5000:5000 $DOCKER_IMAGE """
+                }
+                echo 'Deploying to the server...'
+            }
+        }
+        stage('Push to Docker Hub') { steps { 
+                withCredentials([usernamePassword(credentialsId:"DockerHubCreds",passwordVariable:"dockerPass",usernameVariable:"dockerUser")]){ 
+                sh "docker login -u ${env.dockerUser} -p ${env.dockerPass}" sh "docker tag 
+                naimat1233/flask-app:latest ${env.dockerUser}/flask-app:latest" sh "docker push 
+                ${env.dockerUser}/flask-app:latest"
+                    
+                }
+                echo 'Pushed to Docker Hub successfully'
+            }
+        }
+    }
+}
