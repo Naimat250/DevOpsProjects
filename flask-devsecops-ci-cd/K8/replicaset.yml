@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: flask-replicaset
+  labels:
+    app: flask-app
+spec:
+  replicas: 3  # Number of Pod replicas to maintain
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      containers:
+      - name: flask-container
+        image: naimat1233/flask-app
+        ports:
+        - containerPort: 5000
